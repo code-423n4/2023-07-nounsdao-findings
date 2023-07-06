@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "Bauchibred",
+  "risk": "2",
+  "title": "Hardcoded constants now leads to a massive 20% difference than is meant to be implemented",
+  "issueId": 9,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/9"
+}

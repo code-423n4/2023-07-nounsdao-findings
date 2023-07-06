@@ -47,7 +47,6 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
 
 ## Recommendation
 Consider adding a non-zero check on `ethToSend`
-
 ```solidity
 +++ if(ethToSend > 0) {
 // Send ETH and ERC20 tokens

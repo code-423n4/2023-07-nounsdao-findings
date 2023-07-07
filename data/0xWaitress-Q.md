@@ -55,6 +55,49 @@ Consider adding a non-zero check on `ethToSend`
 ```
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/governance/NounsDAOLogicV1Fork.sol#L237
 
+[L-3] executeFork in NounsDAOV3Fork calls sendProRataTreasury which call address.sendETH to forkTreasury before updating ds.forkEndTimestamp, leading to re-entrency possible for executeFork.
+
+executeFork has a check of `isForkPeriodActive(ds)` which depends if `ds.forkEndTimestamp > block.timestamp`. However it could re-enter itself during sendProRataTreasury which call `timelock.sendETH` which calls `address.sendValue`. This is an external call which could technically re-enter `executeFork`. Since the recipient is the forkTreasury contract so the risk is quite low. 
+
+```solidity
+    function executeFork(NounsDAOStorageV3.StorageV3 storage ds)
+        external
+        returns (address forkTreasury, address forkToken)
+    {
+        if (isForkPeriodActive(ds)) revert ForkPeriodActive();
+...
+
+    function sendProRataTreasury(
+        NounsDAOStorageV3.StorageV3 storage ds,
+        address newDAOTreasury,
+        uint256 tokenCount,
+        uint256 totalSupply
+    ) internal {
+        INounsDAOExecutorV2 timelock = ds.timelock;
+        uint256 ethToSend = (address(timelock).balance * tokenCount) / totalSupply;
+
+        timelock.sendETH(newDAOTreasury, ethToSend);
+
+...
+    function sendETH(address payable recipient, uint256 ethToSend) external {
+        require(msg.sender == admin, 'NounsDAOExecutor::sendETH: Call must come from admin.');
+
+        recipient.sendValue(ethToSend);
+
+        emit ETHSent(recipient, ethToSend);
+    }
+```
+
+## Recommendation
+assign ds before calling sendProRataTreasury
+```solidity
+...
+ds.forkDAOTreasury = forkTreasury;
+ds.forkDAOToken = forkToken;
+ds.forkEndTimestamp = forkEndTimestamp;
+sendProRataTreasury(ds, forkTreasury, tokensInEscrow, adjustedTotalSupply(ds));
+...
+```
 
 [QA-1] sigDigest in NounsDAOV3Proposal should ensure the expirationTiemstamp is bigger than the block.timestamp
 

@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "Co0nan",
+  "risk": "2",
+  "title": "Proposals threshold on the V3 can be manipulated by sending NOUNS token directly to timelock contract.",
+  "issueId": 23,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/23"
+}

@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "Co0nan",
+  "risk": "2",
+  "title": "Signer can force updateProposalBySigs to revert preventing a proposal to be updated.",
+  "issueId": 20,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/20"
+}

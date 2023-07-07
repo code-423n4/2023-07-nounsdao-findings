@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "Co0nan",
+  "risk": "2",
+  "title": "setDelay and setPendingAdmin on the Executor V1 and V2 will always revert due to the require check",
+  "issueId": 14,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/14"
+}

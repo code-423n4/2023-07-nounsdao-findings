@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "descharre",
+  "risk": "2",
+  "title": "Admin and delay can't be set in NounsDAOExecutor",
+  "issueId": 18,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/18"
+}

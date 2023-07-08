@@ -1,3 +1,5 @@
 Change strings in `require` to custom errors, saving gas on the way. The regex pattern is `"\w*"\);` and loop through the occurrences
 
 Use `unchecked { i++; }` in loops where the end is known. The regex pattern is `; ?\w*\++`. Save gas because solidity checks integers for over/underflow after 0.8.0 by default, so we can omit that because we know the limit
+
+In checking for duplicates [here](https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/governance/NounsDAOLogicV1Fork.sol#L793), instead of `for`ing two times which is *O(n²)* (OOG situation if the array is too big, given you are doing `calldataload`s), I suggest using [this](https://www.geeksforgeeks.org/find-duplicates-in-on-time-and-constant-extra-space/) (I am not gonna repeat the same here, just go read it)

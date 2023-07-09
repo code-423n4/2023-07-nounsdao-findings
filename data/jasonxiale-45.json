@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "jasonxiale",
+  "risk": "2",
+  "title": "Fixed Amount of Gas Sent in Call May Be Insufficient",
+  "issueId": 45,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/45"
+}

@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "0xnev",
+  "risk": "3",
+  "title": "[H-01] `NounsDaoV3Proposals.proposeBySigs()`: Proposal can double count votes to bypass minimum proposal threshold checks",
+  "issueId": 40,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/40"
+}

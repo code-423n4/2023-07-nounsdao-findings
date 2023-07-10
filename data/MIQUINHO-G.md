@@ -2,8 +2,6 @@
 
 Using `do while` instead of `for` in some functions may save some gas
 
-## Example
-
 ### Before
 ```
 for(uint256 i;i < _tokens.length;++i;) {
@@ -22,7 +20,7 @@ do {
 
 ```
 
-## Functions Links
+# Functions Lines
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L405
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/NounsDAOForkEscrow.sol#L117claimDuringForkPeriod
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/NounsDAOForkEscrow.sol#L148
@@ -33,7 +31,7 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
 
 Using x = x + y cost less gas than x += y
 
-# Function Links
+# Functions Lines
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/token/NounsTokenFork.sol#L156
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/NounsDAOForkEscrow.sol#L124
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/NounsArt.sol#L408
@@ -42,6 +40,6 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
 
 Using ++x costs less gas than x++
 
-# Function Links
+# Functions Lines
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/NounsDAOForkEscrow.sol#L138
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/NounsDAOForkEscrow.sol#L105

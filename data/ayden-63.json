@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "ayden",
+  "risk": "2",
+  "title": "get creationBlock based on `votingDelay` is not accurate because the `votingDelay` can be changed via the `_setVotingDelay` function",
+  "issueId": 63,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/63"
+}

@@ -6,7 +6,7 @@
 | [NC-01] | Same function names are confusing | 1 |
 | [NC-02] | Split `if` statements that perform multiple checks using `&&` | 6 |
 | [NC-03] | Constant names should consist of all capital letters | 3 |
-
+| [NC-04] | Inconsistent versions of solidity | 11 |
 
 
 ### [L-01] Checks for `block.number` should be removed or re-written to avoid contracts permanently failing
@@ -183,3 +183,74 @@ File: ERC721CheckpointableUpgradeable.sol
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/token/base/ERC721CheckpointableUpgradeable.sol#L51-L52
 
 
+### [NC-04] Inconsistent versions of solidity
+
+The same version of solidity should be used across all contracts. As `^0.8.19` is the latest used and it is started in the info that `^0.8.20` will not be used, all contracts should use `^0.8.19` for consistency.
+
+*There are 11 instances of this issue:*
+
+```solidity
+File: ERC20Transferer.sol
+  16 pragma solidity ^0.8.16;
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/utils/ERC20Transferer.sol#L16
+
+```solidity
+File: DeployDAOV3DataContractsBase.s.sol
+  2 pragma solidity ^0.8.15;
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/script/DeployDAOV3DataContractsBase.s.sol#L2
+
+```solidity
+File: DeployDAOV3DataContractsGoerli.s.sol
+  2 pragma solidity ^0.8.15;
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/script/DeployDAOV3DataContractsGoerli.s.sol#L2
+
+```solidity
+File: DeployDAOV3DataContractsSepolia.s.sol
+  2 pragma solidity ^0.8.15;
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/script/DeployDAOV3DataContractsSepolia.s.sol#L2
+
+```solidity
+File: DeployDAOV3NewContractsBase.s.sol
+  2 pragma solidity ^0.8.15;
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/script/DeployDAOV3NewContractsBase.s.sol#L2
+
+```solidity
+File: DeployDAOV3NewContractsMainnet.s.sol
+  2 pragma solidity ^0.8.15;
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/script/DeployDAOV3NewContractsMainnet.s.sol#L2
+
+```solidity
+File: DeployDAOV3NewContractsTestnet.s.sol
+  2 pragma solidity ^0.8.15;
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/script/DeployDAOV3NewContractsTestnet.s.sol#L2
+
+```solidity
+File: ProposeDAOV3UpgradeMainnet.s.sol
+  2 pragma solidity ^0.8.15;
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/script/ProposeDAOV3UpgradeMainnet.s.sol#L2
+
+```solidity
+File: ProposeDAOV3UpgradeTestnet.s.sol
+  2 pragma solidity ^0.8.15;
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/script/ProposeDAOV3UpgradeTestnet.s.sol#L2
+
+```solidity
+File: ProposeENSReverseLookupConfigMainnet.s.sol
+  2 pragma solidity ^0.8.15;
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/script/ProposeENSReverseLookupConfigMainnet.s.sol#L2
+
+```solidity
+File: ProposeTimelockMigrationCleanupMainnet.s.sol
+  2 pragma solidity ^0.8.15;
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/script/ProposeTimelockMigrationCleanupMainnet.s.sol#L2

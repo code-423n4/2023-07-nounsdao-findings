@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "nadin",
+  "risk": "2",
+  "title": "Using `IERC721.transferFrom()` instead of `safeTransferFrom()` may cause the user's NFT to be frozen in a contract that does not support ERC721",
+  "issueId": 71,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/71"
+}

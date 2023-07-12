@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "MohammedRizwan",
+  "risk": "3",
+  "title": "In NounsDAOExecutorV2.sol, executeTransaction() function is not payable, so value can not be provided along with the call",
+  "issueId": 91,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/91"
+}

@@ -1,0 +1,2 @@
+# NounsAuctionHouseFork.nouns type is incorrect
+[NounsAuctionHouseFork.nouns](https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/NounsAuctionHouseFork.sol#L51) is supposed to be [INounsTokenFork](https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/token/INounsTokenFork.sol#L24C11-L58) instead of `INounsToken`

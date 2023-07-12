@@ -24,3 +24,14 @@ function returnTokensToOwner(address owner, uint256[] calldata tokenIds) externa
         // Emit that event for tracking changes
         emit TokensReturnedToOwner(owner, tokenIds.length);
     }
+```
+## [L-02] Using ```block.timestamp``` for making decisions regarding governance could be problematic
+#### Description 
+usage of ```block.timestamp```. ```block.timestamp``` can be manipulated by miners.
+#### Impact 
+Miners can manipulate the block timestamp to some extent. Which could Effect ```checkGovernanceActive()``` function
+#### Tools Used 
+Solidity Visual Developer 
+#### Recommended Mitigation Step
+Avoid relying on block.timestamp.
+

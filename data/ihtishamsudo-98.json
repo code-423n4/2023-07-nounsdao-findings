@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "ihtishamsudo",
+  "risk": "3",
+  "title": "An Attacker Can Transfer Entire (ERC20) Balance Because of  ```transferFrom``` ignoring any check or return values While Transferring Tokens",
+  "issueId": 98,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/98"
+}

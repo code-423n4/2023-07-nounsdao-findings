@@ -19,4 +19,4 @@ Note that the `value` in a `call` defines the value that is sent, using it as an
 
 ## Recommendation
 
-Change the parameter `value`to `_value` to prevent transaction bugs.
+Change the parameter `value`to `amount` to prevent transaction bugs.

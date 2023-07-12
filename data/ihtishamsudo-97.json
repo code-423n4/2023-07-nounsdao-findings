@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "ihtishamsudo",
+  "risk": "3",
+  "title": "An Attacker Can Trick ```_safeTransferETHWithFallback``` Function To Steal Funds ",
+  "issueId": 97,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/97"
+}

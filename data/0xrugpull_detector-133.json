@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "0xrugpull_detector",
+  "risk": "2",
+  "title": "`NounsDAOV3Proposals.cancel()` does not cancel signature used to create proposal if `msg.sender` is co-signer. Co-signer cannot cancel his proposal as long as his signature is valid.",
+  "issueId": 133,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/133"
+}

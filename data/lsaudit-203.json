@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "lsaudit",
+  "risk": "2",
+  "title": "The admin is a single point of failure and a centralization risk",
+  "issueId": 203,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/203"
+}

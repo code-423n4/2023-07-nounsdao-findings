@@ -30,3 +30,46 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
         votingPeriod = votingPeriod_;
         votingDelay = votingDelay_;
 ```
+
+
+NounsDAOLogicV3 should keep track of all deployed fork tokens and treasury address when executing a fork.
+It might be necessary for future implementations.
+
+```solidity
+    struct NounsDAOForkInstance {
+        address forkDAOTreasury;
+        /// @notice The token contract of the last deployed fork
+        address forkDAOToken;
+        /// @notice Timestamp at which the last fork period ends
+        uint256 forkEndTimestamp;
+        /// @notice Fork period in seconds
+    }
+    struct StorageV3 {
+...
++        NounsDAOForkInstance[]  forkInstances;
+...
+```
+
+```
+    function executeFork(NounsDAOStorageV3.StorageV3 storage ds)
+        external
+        returns (address forkTreasury, address forkToken)
+    {
+...
+        (forkTreasury, forkToken) = ds.forkDAODeployer.deployForkDAO(forkEndTimestamp, forkEscrow);
+        sendProRataTreasury(ds, forkTreasury, tokensInEscrow, adjustedTotalSupply(ds));
+        uint32 forkId = forkEscrow.closeEscrow();
+
+        ds.forkDAOTreasury = forkTreasury; //@audit - should keep track of all treasuries and dao tokens, deployer for fork id
+        ds.forkDAOToken = forkToken; 
+        ds.forkEndTimestamp = forkEndTimestamp; 
+
++       ds.forkInstances.push(NounsDAOForkInstance(
++              ds.forkDAOTreasury,
++              ds.forkDAOToken,
++              ds.forkEndTimestamp));
+    }
+
+        emit ExecuteFork(forkId, forkTreasury, forkToken, forkEndTimestamp, tokensInEscrow);
+    }
+```

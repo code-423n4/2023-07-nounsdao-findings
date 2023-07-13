@@ -74,7 +74,7 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
     uint256 public constant MAX_QUORUM_VOTES_BPS = 2_000; // 2,000 basis points or 20%
 ```
 ## Irrational if block
-The if block in function below returns `proposal.startBlock - votingDelay` if `proposal.creationBlock == 0`.
+The if block in the function below returns `proposal.startBlock - votingDelay` if `proposal.creationBlock == 0`.
 
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L925-L930
 
@@ -133,7 +133,7 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
         emit CancelTransaction(txHash, target, value, signature, data, eta);
     }
 ```
-This double measure is indeed unnecessary because proposal so updated to `Cancelled` or `Vetoed` will deny all future [queue](https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L300)/[execute](https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L338) processes. 
+This double measure is indeed unnecessary because the proposal state so updated to `Cancelled` or `Vetoed` will deny all future [queue](https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L300)/[execute](https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L338) processes after all. 
 
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L371
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOV3Proposals.sol#L600
@@ -182,7 +182,7 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
         );
 ```
 ## Redundant boolean assignment
-Self assigning of `msgSenderIsProposer` in the for loop below. Consider replacing `msgSenderIsProposer = msgSenderIsProposer` with `msgSenderIsProposer`. 
+Self assigning of `msgSenderIsProposer` is implemented in the for loop below. Consider replacing `msgSenderIsProposer = msgSenderIsProposer` with `msgSenderIsProposer`. 
 
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOV3Proposals.sol#L587-L593
 
@@ -196,7 +196,7 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
         }
 ```
 ## Unnecessary input parameter and first require check
-The input parameter as well as the first require statement in `NounsAuctionHouseFork.sol.createBid()` below iare unneeded. 
+The input parameter as well as the first require statement in `NounsAuctionHouseFork.sol.createBid()` below are unneeded. 
 
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/NounsAuctionHouseFork.sol#L115-L124
 

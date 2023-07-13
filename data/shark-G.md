@@ -168,3 +168,72 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
         return block.timestamp;
     }
 ```
+## Unnecessary zero address check
+`msg.sender != address(0)` in the require statement below is not needed since a zero address will not be able to act as `msg.sender` to make a function call.
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOV3Admin.sol#L276-L281
+
+```solidity
+    function _acceptAdmin(NounsDAOStorageV3.StorageV3 storage ds) external {
+        // Check caller is pendingAdmin and pendingAdmin ≠ address(0)
+        require(
+            msg.sender == ds.pendingAdmin && msg.sender != address(0),
+            'NounsDAO::_acceptAdmin: pending admin only'
+        );
+```
+## Redundant boolean assignment
+Self assigning of `msgSenderIsProposer` in the for loop below. Consider replacing `msgSenderIsProposer = msgSenderIsProposer` with `msgSenderIsProposer`. 
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOV3Proposals.sol#L587-L593
+
+```solidity
+        uint256 votes = nouns.getPriorVotes(proposer, block.number - 1);
+        bool msgSenderIsProposer = proposer == msg.sender;
+        address[] memory signers = proposal.signers;
+        for (uint256 i = 0; i < signers.length; ++i) {
+@ audit            msgSenderIsProposer = msgSenderIsProposer || msg.sender == signers[i];
+            votes += nouns.getPriorVotes(signers[i], block.number - 1);
+        }
+```
+## Unnecessary input parameter and first require check
+The input parameter as well as the first require statement in `NounsAuctionHouseFork.sol.createBid()` below iare unneeded. 
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/NounsAuctionHouseFork.sol#L115-L124
+
+```solidity
+    /**
+     * @notice Create a bid for a Noun, with a given amount.
+     * @dev This contract only accepts payment in ETH.
+     */
+    function createBid(uint256 nounId) external payable override nonReentrant {
+        INounsAuctionHouse.Auction memory _auction = auction;
+
+        require(_auction.nounId == nounId, 'Noun not up for auction');
+        require(block.timestamp < _auction.endTime, 'Auction expired');
+        require(msg.value >= reservePrice, 'Must send at least reservePrice');
+```
+This is because `_auction.nounId` has already been defaulted to the returned value of `nounId` when `_createAuction()` attempted to mint the next Nouns token.
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/NounsAuctionHouseFork.sol#L212-L230
+
+```solidity
+    function _createAuction() internal {
+        try nouns.mint() returns (uint256 nounId) {
+            uint256 startTime = block.timestamp;
+            uint256 endTime = startTime + duration;
+
+            auction = Auction({
+                nounId: nounId,
+                amount: 0,
+                startTime: startTime,
+                endTime: endTime,
+                bidder: payable(0),
+                settled: false
+            });
+
+            emit AuctionCreated(nounId, startTime, endTime);
+        } catch Error(string memory) {
+            _pause();
+        }
+    }
+```

@@ -41,6 +41,27 @@ function _settleAuction() internal {
     emit AuctionSettled(_auction.nounId, _auction.bidder, _auction.amount);
 }
 ```
+## Spec document contradicts function logic
+The spec is noted as saying,
+
+https://hackmd.io/@el4d/nouns-dao-v3-spec
+ 
+```
+In this new version a proposal can also be cancelled if:
+
+1. One of the accounts that signed on the proposal chooses to cancel, or
+2. The sum of votes of all proposers no longer exceeds threshold.
+```
+However, it is implemented otherwise in the require statement of `NounsDAOV3Proposals.cancel()` below where signer can only cancel the proposal when the sum of votes of all proposers no longer exceeds threshold. Consider updating the document to correctly reflect what has been implemented.  
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOV3Proposals.sol#L595-L598
+
+```solidity
+        require(
+            msgSenderIsProposer || votes <= proposal.proposalThreshold,
+            'NounsDAO::cancel: proposer above threshold'
+        );
+```
 ## Code and comment mismatch
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L86
 
@@ -76,6 +97,23 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
 ```solidity
 @ audit NounsDAOLogicV2.sol should be changed to NounsDAOLogicV3.sol
 // NounsDAOLogicV2.sol is a modified version of Compound Lab's GovernorBravoDelegate.sol:
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOInterfaces.sol#L217
+
+```solidity
+    @ audit the during of should be omitted
+    /// @notice Emitted when the during of the forking period is set
+```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/token/base/ERC721CheckpointableUpgradeable.sol#L80-L84
+
+```solidity
+    @ audit thats should be changed to that's
+    /// @notice An event thats emitted when an account changes its delegate
+    event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate);
+
+    @ audit thats should be changed to that's
+    /// @notice An event thats emitted when a delegate account's vote balance changes
+    event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance);
 ```
 ## Wrong adoption of block time
 The following voting period constants are assuming 9.6 instead of 12 seconds per block. Depending on the sensitivity of lower and upper ranges desired, these may limit or shift the intended settable voting periods. For instance, using the supposed 12 second per block convention, the minimum and maximum settable voting periods should respectively be 7_200 and 100_800. 

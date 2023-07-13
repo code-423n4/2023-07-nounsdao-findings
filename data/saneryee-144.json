@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "saneryee",
+  "risk": "2",
+  "title": "Condition will not revert when `block.timestamp` is `==` to the compared variable(supplement)",
+  "issueId": 144,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/144"
+}

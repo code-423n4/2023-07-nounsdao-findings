@@ -11,11 +11,12 @@
 
 ## Description
 
-The current version of openzeppelin contracts has two high risk of vulnerability:
+The current version of openzeppelin contracts has some high risks of vulnerability:
 - Initializer reentrancy: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/3006
+- ERC165Checker supportsInterface: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/3552
 - Signature malleability attack: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/3610
 
-Although there are no exploitable scenarios in the current codebase, since the contract is upgradable, future changes may introduce attack vectors and need to be upgraded to the new version as soon as possible.
+I submit the signature vulnerability in a separate issue, although the other issues were not exploited scenarios in the current codebase, since the contract is upgradable, future changes may introduce attack vectors and need to be upgraded to the new version as soon as possible.
 
 ## Recommendations
 

@@ -1,5 +1,5 @@
 ## Reserve price not fully taken care of
-It is possible for an active auction to close at a price lower than the newly increased reserve price. This is undesirable especially preventing a Noun auctioned off at the lower than expected price could be out of control in a bear market. Consider adding a check alleging that the contract balance needing to exceed the reserve price. Else, the last bidder will be refunded prior to having the Noun burned. Here's a refactored code logic that will take care of the suggestion.
+It is possible for an active auction to close at a price lower than the newly increased reserve price. This is undesirable especially when preventing a Noun auctioned off at the lower than expected price could be out of control in a bear market. Consider adding a check alleging that the contract balance needing to exceed the reserve price. Else, the last bidder will be refunded prior to having the Noun burned. Here's a refactored code logic that will take care of the suggestion.
 
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/NounsAuctionHouseFork.sol#L236-L256
 
@@ -116,7 +116,7 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
     event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance);
 ```
 ## Wrong adoption of block time
-The following voting period constants are assuming 9.6 instead of 12 seconds per block. Depending on the sensitivity of lower and upper ranges desired, these may limit or shift the intended settable voting periods. For instance, using the supposed 12 second per block convention, the minimum and maximum settable voting periods should respectively be 7_200 and 100_800. 
+The following voting period constants are assuming 9.6 instead of 12 seconds per block. Depending on the sensitivity of lower and upper ranges desired, these may limit or shift the intended settable voting periods. For instance, using the supposed 12 second per block convention, the minimum and maximum settable voting periods should respectively be `7_200` and `100_800`. 
 
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L67-L71
 
@@ -138,7 +138,7 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
     /// @notice The minimum setable proposal threshold
     uint256 public constant MIN_PROPOSAL_THRESHOLD_BPS = 1; // 1 basis point or 0.01%
 ```
-This could pose a precision issue even if the total supply of Nouns tokens is already in its three digits. Apparently, a proposal threshold determined via the following two functions could return zero, e.g. (1 * 720) / 10000 yields zero due to truncation, i.e. numerator smaller than denominator.
+This could pose a precision issue even if the total supply of Nouns tokens is already in its three digits. Apparently, a proposal threshold determined via the following two functions could return zero, e.g. (1 * 720) / 10000 yields zero due to truncation, i.e. the numerator smaller than the denominator.
 
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L921-L923
 
@@ -165,3 +165,8 @@ With a new fork competing with the original DAO for the daily auction, it will l
 The 20% threshold, as [documented in the FAQs](https://mirror.xyz/0x10072dfc23771101dC042fD0014f263316a6E400/iN0FKOn_oYVBzlJkwPwK2mhzaeL8K2-W80u82F7fHj8) for instance, 800 * 0.2 = 160 of Nouns tokens, is not a small number comparatively in terms of the market cap. This translates to approximately 160 * 30 ETH * $2,000 almost equivalent to 10 million worth of USDC. For members wishing to dodge bad/undesirable proposals that aren't going to be vetoed, it's likely this will not materialize where the proposals get executed long before the threshold could be met to initiate a fork.
 
 Consider conditionally reducing the threshold given that ragequit (or [quitting](https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/governance/NounsDAOLogicV1Fork.sol#L196-L245)) is going to happen regardless of the size of the fork. It is the forking group that could share the same goal and direction in a new DAO that matters.        
+
+## Prolonged process due to updatable state
+The introduction of [`updatePeriodEndBlock`](https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOV3Proposals.sol#L67) in V3 compared to the V1/V2 could unnecessarily prolong the entire proposal voting process.
+
+Consider reducing the pending period to make room for the updatable period which should nonetheless be entailing a longer period still, albeit in a more reasonable sense.

@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "klau5",
+  "risk": "2",
+  "title": "Auction may not end and may bid same price because of no limit on `minBidIncrementPercentage`",
+  "issueId": 184,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/184"
+}

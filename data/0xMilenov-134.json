@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "0xMilenov",
+  "risk": "3",
+  "title": "Risk of fund misappropriation due to signature reuse across forks",
+  "issueId": 134,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/134"
+}

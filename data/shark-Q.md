@@ -1,3 +1,46 @@
+## Reserve price not fully taken care of
+It is possible for an active auction to close at a price lower than the newly increased reserve price. This is undesirable especially preventing a Noun auctioned off at the lower than expected price could be out of control in a bear market. Consider adding a check alleging that the contract balance needing to exceed the reserve price. Else, the last bidder will be refunded prior to having the Noun burned. Here's a refactored code logic that will take care of the suggestion.
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/NounsAuctionHouseFork.sol#L236-L256
+
+```solidity
+/**
+ * @notice Settle an auction, finalizing the bid and paying out to the owner.
+ * @dev If there are no bids, the Noun is burned.
+ */
+function _settleAuction() internal {
+    INounsAuctionHouse.Auction memory _auction = auction;
+
+    require(_auction.startTime != 0, "Auction hasn't begun");
+    require(!_auction.settled, 'Auction has already been settled');
+    require(block.timestamp >= _auction.endTime, "Auction hasn't completed");
+
+    auction.settled = true;
+
+    // Check if contract balance is greater than reserve price
+    if (address(this).balance < reservePrice) {
+        // If contract balance is less than reserve price, refund to the last bidder
+        if (_auction.bidder != address(0)) {
+            _safeTransferETHWithFallback(_auction.bidder, _auction.amount);
+        }
+
+        // And then burn the Noun
+        nouns.burn(_auction.nounId);
+    } else {
+        if (_auction.bidder == address(0)) {
+            nouns.burn(_auction.nounId);
+        } else {
+            nouns.transferFrom(address(this), _auction.bidder, _auction.nounId);
+        }
+
+        if (_auction.amount > 0) {
+            _safeTransferETHWithFallback(owner(), _auction.amount);
+        }
+    }
+
+    emit AuctionSettled(_auction.nounId, _auction.bidder, _auction.amount);
+}
+```
 ## Code and comment mismatch
 https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L86
 
@@ -28,6 +71,12 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
      @ audit priviledges should be changed to privileges
      * @notice Burns veto priviledges
 ```
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV3.sol#L19
+
+```solidity
+@ audit NounsDAOLogicV2.sol should be changed to NounsDAOLogicV3.sol
+// NounsDAOLogicV2.sol is a modified version of Compound Lab's GovernorBravoDelegate.sol:
+```
 ## Wrong adoption of block time
 The following voting period constants are assuming 9.6 instead of 12 seconds per block. Depending on the sensitivity of lower and upper ranges desired, these may limit or shift the intended settable voting periods. For instance, using the supposed 12 second per block convention, the minimum and maximum settable voting periods should respectively be 7_200 and 100_800. 
 
@@ -39,39 +88,6 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
 
     /// @notice The max setable voting period
     uint256 public constant MAX_VOTING_PERIOD = 80_640; // About 2 weeks
-```
-## function initialize can be initialized more than once
-There is no `initializer` visibility in the following two functions that separately have a require string message denoted as saying `NounsDAO::initialize: can only initialize once`.
-
-https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L135-L144
-
-```solidity
-    function initialize(
-        address timelock_,
-        address nouns_,
-        address vetoer_,
-        uint256 votingPeriod_,
-        uint256 votingDelay_,
-        uint256 proposalThresholdBPS_,
-        DynamicQuorumParams calldata dynamicQuorumParams_
-    ) public virtual {
-        require(address(timelock) == address(0), 'NounsDAO::initialize: can only initialize once');
-```
-https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/governance/NounsDAOLogicV1Fork.sol#L165-L176
-
-```solidity
-    function initialize(
-        address timelock_,
-        address nouns_,
-        uint256 votingPeriod_,
-        uint256 votingDelay_,
-        uint256 proposalThresholdBPS_,
-        uint256 quorumVotesBPS_,
-        address[] memory erc20TokensToIncludeInQuit_,
-        uint256 delayedGovernanceExpirationTimestamp_
-    ) public virtual {
-        __ReentrancyGuard_init_unchained();
-        require(address(timelock) == address(0), 'NounsDAO::initialize: can only initialize once');
 ```
 ## MIN_PROPOSAL_THRESHOLD_BPS is too low a value
 In NounsDAOLogicV2.sol, NounsDAOV3Admin.sol, and NounsDAOLogicV1Fork.sol, the minimum proposal threshold can be set as low as 1 basis point.

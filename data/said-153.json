@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "said",
+  "risk": "2",
+  "title": "`quit` function inside Forked DAO should only work for escrowed nouns token from original DAO, otherwise forked DAO will not serve its purpose and auctioned token could be used to get profit from treasury funds",
+  "issueId": 153,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/153"
+}

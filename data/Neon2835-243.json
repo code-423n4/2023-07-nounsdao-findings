@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "Neon2835",
+  "risk": "3",
+  "title": "The fork mechanism of Nouns lacks a fork cooling-off period/clarification period/remedial period mechanism, which cannot resist someone maliciously inciting the emotions of DAO members and triggering impulsive forks",
+  "issueId": 243,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/243"
+}

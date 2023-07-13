@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "Kaysoft",
+  "risk": "2",
+  "title": "The try...catch implementation in NounsAuctionHouseFork.sol::_createAuction() function will not catch all errors",
+  "issueId": 252,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/252"
+}

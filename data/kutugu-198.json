@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "kutugu",
+  "risk": "3",
+  "title": "cancelSig will not completely cancel signatures due to malleability vulnerabilities",
+  "issueId": 198,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/198"
+}

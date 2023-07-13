@@ -25,6 +25,8 @@
 | [G-19] | Use assembly to hash instead of solidity                                                                                                                  |   18    |
 | [G-20] | use mappings instead of arrays                                                                                                                            |   16    |
 | [G-21] | Use bytes.concat() instead of abi.encodePacked(), since this is preferred since 0.8.4                                                                     |    5    |
+| [G-22] | Pre-increments and pre-decrements are cheaper than post-increments and post-decrements |    10    |
+| [G-23] | Use assembly for math (add, sub, mul, div)  |    9    |
 
 ## [G-01] Avoid contract existence checks by using low level calls
 
@@ -753,6 +755,18 @@ index a5440b5..e011aff 100644
 +            if (currentOwnerOf(tokenIds[i]) != _dao) revert NotOwner();
 
              nounsToken.transferFrom(address(this), to, tokenIds[i]);
+
+```
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/token/NounsTokenFork.sol#L150
+
+
+```solidity
+file: contracts/governance/fork/newdao/token/NounsTokenFork.sol
+
+150            uint256 nounId = tokenIds[i];
+
+173            uint256 nounId = tokenIds[i];
 
 ```
 
@@ -2685,4 +2699,122 @@ File: contracts/governance/NounsDAOV3Proposals.sol
             proposalId,
             calcProposalEncodeData(msg.sender, txs, description)
         );
+```
+
+## [G-22] Pre-increments and pre-decrements are cheaper than post-increments and post-decrements
+
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/NounsDAOForkEscrow.sol#L105
+
+```solidity
+file: contracts/governance/fork/NounsDAOForkEscrow.sol
+
+105        numTokensInEscrow++;
+138        forkId++;
+
+```
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol#L239
+
+
+```solidity
+file: contracts/governance/NounsDAOLogicV2.sol
+
+239        proposalCount++;
+
+```
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOV3Proposals.sol#L837
+
+```solidity
+file: contracts/governance/NounsDAOV3Proposals.sol
+
+837            signers[numSigners++] = signer;
+
+```
+
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/script/ProposeDAOV3UpgradeMainnet.s.sol#L82
+
+```solidity
+file: script/ProposeDAOV3UpgradeMainnet.s.sol
+
+82         i++;
+
+88         i++;
+
+100        i++;
+
+106        i++;
+
+```
+
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/token/NounsTokenFork.sol#L207
+
+
+```solidity
+file: contracts/governance/fork/newdao/token/NounsTokenFork.sol
+
+207        return _mintTo(minter, _currentNounId++);
+```
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/token/base/ERC721CheckpointableUpgradeable.sol#L153
+
+
+```solidity
+file: contracts/governance/fork/newdao/token/base/ERC721CheckpointableUpgradeable.sol
+
+153        require(nonce == nonces[signatory]++, 'ERC721Checkpointable::delegateBySig: invalid nonce');
+
+```
+## [G-23] Use assembly for math (add, sub, mul, div)
+
+Use assembly for math instead of Solidity. You can check for overflow/underflow in assembly to ensure safety. If using Solidity versions < 0.8.0 and you are using Safemath, you can gain significant gas savings by using assembly to calculate values and checking for overflow/underflow
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/token/base/ERC721CheckpointableUpgradeable.sol
+
+```solidity
+file: contracts/governance/fork/newdao/token/base/ERC721CheckpointableUpgradeable.sol
+
+280        uint96 c = a + b;
+
+291        return a - b;
+```
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOLogicV2.sol
+
+```solidity
+file: contracts/governance/NounsDAOLogicV2.sol
+
+1010            uint256 center = upper - (upper - lower) / 2;
+
+1067            return (number * bps) / 10000;
+```
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOV3Admin.sol
+
+```solidity
+file: contracts/governance/NounsDAOV3Admin.sol
+
+488        uint256 newVoteSnapshotBlockSwitchProposalId = ds.proposalCount + 1;
+
+```
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOV3DynamicQuorum.sol
+
+```solidity
+file: contracts/governance/NounsDAOV3DynamicQuorum.sol
+
+63        uint256 againstVotesBPS = (10000 * againstVotes) / totalSupply;
+
+64        uint256 quorumAdjustmentBPS = (params.quorumCoefficient * againstVotesBPS) / 1e6;
+```
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/NounsAuctionHouseFork.sol
+
+```solidity
+file: contracts/governance/fork/newdao/NounsAuctionHouseFork.sol
+
+215            uint256 endTime = startTime + duration;
 ```

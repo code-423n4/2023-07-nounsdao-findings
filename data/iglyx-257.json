@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "iglyx",
+  "risk": "3",
+  "title": "Fork DAO quit do not filter token duplicates and allows for stealing of the whole ERC20 holdings of its treasury",
+  "issueId": 257,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/257"
+}

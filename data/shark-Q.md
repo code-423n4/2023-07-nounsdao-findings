@@ -155,13 +155,13 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
     }
 ```
 ## V3 upgrade could depreciate token value due to oversupply
-The forking feature, though rarely happened as documented, could potentially affect the Nouns token value. This is because:
-- a new fork will have its own DAO tokens daily generated and auctioned off through a new Auction House
+The forking feature, though rarely happened as [documented in the FAQs](https://mirror.xyz/0x10072dfc23771101dC042fD0014f263316a6E400/iN0FKOn_oYVBzlJkwPwK2mhzaeL8K2-W80u82F7fHj8), could potentially affect the Nouns token value. This is because:
+- a new fork will have its own DAO tokens daily generated and auctioned off through a new Auction House.
 - new Nouns tokens claimed through escrow and during forking period will not have the original Nouns tokens burned. They are transferred to the original treasury or elsewhere as the DAO deems fit.
 
-With a new fork competing with the original DAO for the daily auction, it will likely diverge the amount of ETH intended to go into bidding the daily new NFTs from both ends. The situation could be worse in the far future if more forks were to transpire.
+With a new fork competing with the original DAO for the daily auction, it will likely diverge the amount of ETH intended to go into bidding for the daily new NFTs at opposing ends. The situation could be worse in the far future if more forks were to transpire.
 
 ## Nouns fork may not efficiently remedy a bad situation
-The 20% threshold, for instance, 800 * 0.2 = 160 of Nouns tokens, is not a small number comparatively in terms of the market cap. This translates to 160 * 30 ETH * $2,000 almost equivalent to 10 million worth of USDC. For members wishing to dodge bad/undesirable proposals that aren't going to be vetoed, it's likely this will not materialize where the proposals get executed long before the threshold could be met to initiate a fork.
+The 20% threshold, as [documented in the FAQs](https://mirror.xyz/0x10072dfc23771101dC042fD0014f263316a6E400/iN0FKOn_oYVBzlJkwPwK2mhzaeL8K2-W80u82F7fHj8) for instance, 800 * 0.2 = 160 of Nouns tokens, is not a small number comparatively in terms of the market cap. This translates to approximately 160 * 30 ETH * $2,000 almost equivalent to 10 million worth of USDC. For members wishing to dodge bad/undesirable proposals that aren't going to be vetoed, it's likely this will not materialize where the proposals get executed long before the threshold could be met to initiate a fork.
 
-Consider conditionally reducing the threshold given that ragequit is going to happen regardless of the size of the fork. It is forking group that could share the same goal and direction in a new DAO that matters.        
+Consider conditionally reducing the threshold given that ragequit (or [quitting](https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/fork/newdao/governance/NounsDAOLogicV1Fork.sol#L196-L245)) is going to happen regardless of the size of the fork. It is the forking group that could share the same goal and direction in a new DAO that matters.        

@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "adeolu",
+  "risk": "2",
+  "title": "_proposals mapping is never updated when a new proposal is created via propose() in NounsDAOV3Proposals.sol ",
+  "issueId": 193,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/193"
+}

@@ -1,0 +1,8 @@
+{
+  "contest": 257,
+  "handle": "Bughunter101",
+  "risk": "2",
+  "title": "`ERC20Transferer.transferEntireBalance` should use `safeTransferFrom()` instead of `transferFrom()`",
+  "issueId": 136,
+  "issueUrl": "https://github.com/code-423n4/2023-07-nounsdao-findings/issues/136"
+}

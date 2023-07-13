@@ -147,4 +147,24 @@ https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a6829
 ```solidity
         proposal.vetoed = true;
 ```
- 
+## Boolean expressions to boolean literals comparison
+Comparing a boolean value to a boolean literal incurs the `ISZERO` opcode operation, costing more gas than using a boolean expression. Avoid this adoption if possible.
+
+There are numerous instances throughout the codebase in different contracts. Here's just one of the specific instances:  
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOV3Votes.sol#L219
+
+```solidity
+        require(receipt.hasVoted == false, 'NounsDAO::castVoteDuringVotingPeriodInternal: voter already voted');
+```
+## Direct utilization of global variables
+The following function is unneeded since `block.timestamp` is a global variable that can readily be used directly.
+
+https://github.com/nounsDAO/nouns-monorepo/blob/718211e063d511eeda1084710f6a682955e80dcb/packages/nouns-contracts/contracts/governance/NounsDAOExecutorV2.sol#L204-L207
+
+```solidity
+    function getBlockTimestamp() internal view returns (uint256) {
+        // solium-disable-next-line security/no-block-members
+        return block.timestamp;
+    }
+```

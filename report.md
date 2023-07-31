@@ -15,7 +15,7 @@ Code4rena (C4) is an open organization consisting of security researchers, audit
 
 A C4 audit is an event in which community participants, referred to as Wardens, review, audit, or analyze smart contract logic in exchange for a bounty provided by sponsoring projects.
 
-During the audit outlined in this document, C4 conducted an analysis of the Nouns DAO smart contract system written in Solidity. The audit took place between July 3—July 13 2023.
+During the audit outlined in this document, C4 conducted an analysis of the Nouns DAO smart contract system written in Solidity. The audit took place between July 3—July 13, 2023.
 
 ## Wardens
 
